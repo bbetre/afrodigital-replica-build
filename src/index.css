@@ -42,14 +42,26 @@ All colors MUST be HSL.
     --brand-red: 14 100% 57%;
     --brand-orange: 25 95% 53%;
     --brand-navy: 220 70% 10%;
+    --brand-purple: 270 70% 50%;
+    --brand-cyan: 190 90% 50%;
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(14 100% 57%) 0%, hsl(25 95% 53%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 70% 10%) 0%, hsl(270 70% 20%) 50%, hsl(14 100% 57%) 100%);
     --gradient-accent: linear-gradient(180deg, hsl(14 100% 57% / 0.1) 0%, transparent 100%);
+    --gradient-cyber: linear-gradient(135deg, hsl(190 90% 50% / 0.1) 0%, hsl(270 70% 50% / 0.1) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.1) 0%, hsl(0 0% 100% / 0.05) 100%);
     
     /* Shadows */
     --shadow-soft: 0 4px 20px hsl(220 70% 10% / 0.08);
     --shadow-medium: 0 8px 30px hsl(220 70% 10% / 0.12);
+    --shadow-glow: 0 0 40px hsl(14 100% 57% / 0.3);
+    --shadow-glow-cyan: 0 0 40px hsl(190 90% 50% / 0.3);
+    --shadow-glow-purple: 0 0 40px hsl(270 70% 50% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -62,23 +74,23 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 70% 10%;
+    --background: 220 70% 5%;
     --foreground: 0 0% 100%;
 
-    --card: 220 65% 12%;
+    --card: 220 65% 8%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 220 65% 12%;
+    --popover: 220 65% 8%;
     --popover-foreground: 0 0% 100%;
 
     --primary: 0 0% 100%;
     --primary-foreground: 220 70% 10%;
 
-    --secondary: 220 50% 18%;
+    --secondary: 220 50% 15%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 50% 18%;
-    --muted-foreground: 220 17% 65%;
+    --muted: 220 50% 15%;
+    --muted-foreground: 220 17% 70%;
 
     --accent: 14 100% 57%;
     --accent-foreground: 0 0% 100%;
@@ -86,8 +98,8 @@ All colors MUST be HSL.
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 50% 18%;
-    --input: 220 50% 18%;
+    --border: 220 50% 20%;
+    --input: 220 50% 20%;
     --ring: 0 0% 100%;
     
     --sidebar-background: 240 5.9% 10%;
@@ -120,8 +132,21 @@ All colors MUST be HSL.
     background: var(--gradient-primary);
   }
   
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
   .gradient-accent {
     background: var(--gradient-accent);
+  }
+  
+  .gradient-cyber {
+    background: var(--gradient-cyber);
+  }
+  
+  .gradient-glass {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(10px);
   }
   
   .shadow-soft {
@@ -130,5 +155,89 @@ All colors MUST be HSL.
   
   .shadow-medium {
     box-shadow: var(--shadow-medium);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
+  }
+  
+  .shadow-glow-purple {
+    box-shadow: var(--shadow-glow-purple);
+  }
+  
+  .glass-card {
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.1) 0%, hsl(0 0% 100% / 0.05) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(0 0% 100% / 0.2);
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .animate-slide-in {
+    animation: slideIn 0.8s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .hover-lift {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px hsl(14 100% 57% / 0.3);
+  }
+  to {
+    box-shadow: 0 0 40px hsl(14 100% 57% / 0.8);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
