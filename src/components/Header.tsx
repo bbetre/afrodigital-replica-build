@@ -32,22 +32,30 @@ const Header = () => {
         </div>
         
         <nav className="hidden md:flex items-center gap-8">
-          {["Services", "Solutions", "About", "Case Studies"].map((item) => (
+          {[
+            { name: "About", path: "/about" },
+            { name: "Services", path: "/services" },
+            { name: "Solutions", path: "/solutions" },
+            { name: "Case Studies", path: "/case-studies" },
+            { name: "Careers", path: "/careers" },
+          ].map((item) => (
             <a 
-              key={item}
-              href={`#${item.toLowerCase().replace(" ", "-")}`}
+              key={item.name}
+              href={item.path}
               className="relative text-sm font-medium text-foreground/80 hover:text-foreground transition-colors group"
             >
-              {item}
+              {item.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-accent to-primary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
         
         <div className="flex items-center gap-4">
-          <Button className="hidden md:flex bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow font-medium px-6 transition-all duration-300 hover:scale-105">
-            Let's Talk
-          </Button>
+          <a href="/contact">
+            <Button className="hidden md:flex bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow font-medium px-6 transition-all duration-300 hover:scale-105">
+              Let's Talk
+            </Button>
+          </a>
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="w-5 h-5" />
           </Button>
