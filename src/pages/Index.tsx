@@ -19,11 +19,11 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <SecurityDashboardDemo />
         <ServicesSection />
         <TrustSection />
         <TechStackShowcase />
         <ProcessTimeline />
+        <SecurityDashboardDemo />
         <TechRadar />
         <BenefitsSection />
         <TestimonialsCarousel />
