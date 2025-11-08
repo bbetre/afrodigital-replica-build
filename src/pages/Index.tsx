@@ -7,9 +7,7 @@ import TechStackShowcase from "@/components/TechStackShowcase";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TechRadar from "@/components/TechRadar";
 import CtaSection from "@/components/CtaSection";
-import BenefitsSection from "@/components/BenefitsSection";
 import FeaturesSection from "@/components/FeaturesSection";
-import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import StatsSection from "@/components/StatsSection";
 import Footer from "@/components/Footer";
 
@@ -25,8 +23,6 @@ const Index = () => {
         <ProcessTimeline />
         <SecurityDashboardDemo />
         <TechRadar />
-        <BenefitsSection />
-        <TestimonialsCarousel />
         <FeaturesSection />
         <StatsSection />
         <CtaSection />

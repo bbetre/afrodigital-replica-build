@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { 
   Linkedin, 
@@ -13,8 +13,11 @@ import {
   TrendingUp,
   CheckCircle2,
   Mail,
-  MessageSquare
+  MessageSquare,
+  Phone, MapPin
 } from "lucide-react";
+import { Twitter } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -45,10 +48,11 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Linkedin, href: "https://www.linkedin.com/company/afro-digitalet", label: "LinkedIn" },
+    { icon: Instagram, href: "https://www.instagram.com/afrodigital.et/", label: "Instagram" },
+    { icon: Twitter, href: "https://x.com/AfroDigita", label: "X (Twitter)" },
+    { icon: Send, href: "https://t.me/Afro_Digital", label: "Telegram" },
     { icon: Github, href: "#", label: "GitHub" },
-    { icon: Send, href: "#", label: "Telegram" },
-    { icon: Instagram, href: "#", label: "Instagram" },
   ];
 
   return (
@@ -74,32 +78,33 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="container mx-auto px-6 py-12">
         {/* Centered Logo with Tagline */}
-        <div className="text-center mb-12">
-          <div className="text-4xl font-bold mb-3">
-            <span>Afro</span>
-            <span className="text-accent">Digital</span>
-          </div>
+        <div className="text-center mb-16">
+          <img 
+            src={logo} 
+            alt="AfroDigital Logo" 
+            className="h-16 w-auto mx-auto mb-6 filter invert brightness-0"
+          />
           <p className="text-lg font-semibold text-primary-foreground/80">
             Clarity. Security. Breakthroughs.
           </p>
         </div>
 
-        {/* Live Metrics */}
+        {/* Contact Info */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-3xl mx-auto">
-          <div className="text-center p-4 rounded-lg bg-primary-foreground/5 backdrop-blur">
-            <TrendingUp className="h-8 w-8 mx-auto mb-2 text-accent" />
-            <div className="text-3xl font-bold mb-1">{projectsCount}+</div>
-            <div className="text-sm text-primary-foreground/70">Projects Delivered</div>
-          </div>
-          <div className="text-center p-4 rounded-lg bg-primary-foreground/5 backdrop-blur">
-            <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-accent" />
-            <div className="text-3xl font-bold mb-1">{uptime.toFixed(1)}%</div>
-            <div className="text-sm text-primary-foreground/70">Uptime Guarantee</div>
-          </div>
-          <div className="text-center p-4 rounded-lg bg-primary-foreground/5 backdrop-blur">
-            <Award className="h-8 w-8 mx-auto mb-2 text-accent" />
-            <div className="text-3xl font-bold mb-1">ISO 27001</div>
-            <div className="text-sm text-primary-foreground/70">Certified</div>
+          <a href="tel:+251912207180" className="text-center p-6 rounded-lg bg-primary-foreground/5 backdrop-blur hover:bg-primary-foreground/10 transition-colors group">
+            <Phone className="h-8 w-8 mx-auto mb-3 text-accent group-hover:scale-110 transition-transform" />
+            <h4 className="font-semibold mb-1">Call Us</h4>
+            <p className="text-sm text-primary-foreground/70">+251 912 207 180</p>
+          </a>
+          <a href="mailto:info@afrodigital.et" className="text-center p-6 rounded-lg bg-primary-foreground/5 backdrop-blur hover:bg-primary-foreground/10 transition-colors group">
+            <Mail className="h-8 w-8 mx-auto mb-3 text-accent group-hover:scale-110 transition-transform" />
+            <h4 className="font-semibold mb-1">Email Us</h4>
+            <p className="text-sm text-primary-foreground/70">info@afrodigital.et</p>
+          </a>
+          <div className="text-center p-6 rounded-lg bg-primary-foreground/5 backdrop-blur group">
+            <MapPin className="h-8 w-8 mx-auto mb-3 text-accent" />
+            <h4 className="font-semibold mb-1">Location</h4>
+            <p className="text-sm text-primary-foreground/70">Addis Ababa, Ethiopia</p>
           </div>
         </div>
 
@@ -166,10 +171,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-accent">Legal</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-primary-foreground/70 hover:text-accent transition-colors">Terms</a></li>
-              <li><a href="#" className="text-primary-foreground/70 hover:text-accent transition-colors">Privacy</a></li>
-              <li><a href="#" className="text-primary-foreground/70 hover:text-accent transition-colors">Cookie Policy</a></li>
-              <li><a href="#" className="text-primary-foreground/70 hover:text-accent transition-colors">Compliance</a></li>
+              <li><Link to="/terms" className="text-primary-foreground/70 hover:text-accent transition-colors">Terms</Link></li>
+              <li><Link to="/privacy" className="text-primary-foreground/70 hover:text-accent transition-colors">Privacy</Link></li>
+              <li><Link to="/cookie-policy" className="text-primary-foreground/70 hover:text-accent transition-colors">Cookie Policy</Link></li>
+              <li><Link to="/compliance" className="text-primary-foreground/70 hover:text-accent transition-colors">Compliance</Link></li>
             </ul>
           </div>
 
@@ -182,6 +187,8 @@ const Footer = () => {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-primary-foreground/10 hover:bg-accent transition-all hover:scale-110"
                 >
                   <social.icon className="h-5 w-5" />
@@ -208,7 +215,7 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <Globe className="h-4 w-4 text-primary-foreground/70" />
               <select
-                value={language}
+                value={language} 
                 onChange={(e) => setLanguage(e.target.value)}
                 className="bg-primary-foreground/10 border border-primary-foreground/20 rounded px-3 py-1 text-sm text-primary-foreground focus:outline-none focus:ring-2 focus:ring-accent"
               >

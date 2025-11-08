@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect, useRef, useState } from "react";
 import { Target, Users, Zap, Award } from "lucide-react";
+import betermariyamProfilePic from "@/assets/1728312666234.jpeg";
 
 const values = [
   {
@@ -31,10 +32,10 @@ const values = [
 ];
 
 const team = [
-  { name: "Sarah Johnson", role: "CEO & Founder", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" },
-  { name: "Michael Chen", role: "CTO", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop" },
-  { name: "Emily Rodriguez", role: "Head of Design", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop" },
-  { name: "David Kim", role: "Lead Developer", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop" },
+  { name: "BeterMariyam Yosef", role: "Founder and CEO", image: betermariyamProfilePic, linkedin: "https://www.linkedin.com/in/betremariyamyosef/" },
+  { name: "Biruk Damtew", role: "Co-Founder", image: "https://source.boringavatars.com/beam/120/Biruk%20Damtew?colors=264653,2a9d8f,e9c46a,f4a261,e76f51" },
+  { name: "Natnil Teklay", role: "Head of Design", image: "https://source.boringavatars.com/beam/120/Natnil%20Teklay?colors=264653,2a9d8f,e9c46a,f4a261,e76f51" },
+  { name: "Adonial Alemayehu", role: "FullStack Developer", image: "https://source.boringavatars.com/beam/120/Adonial%20Alemayehu?colors=264653,2a9d8f,e9c46a,f4a261,e76f51" },
 ];
 
 const AboutUs = () => {
@@ -88,32 +89,22 @@ const AboutUs = () => {
       {/* Story Section */}
       <section className="py-24 relative">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+          <div className="max-w-4xl mx-auto">
+            <div className="glass-card p-8 md:p-12 rounded-2xl text-center">
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
                 Our Story
               </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
+              <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
+                <p className="text-left md:text-center">
                   Founded in 2020, AfroDigital emerged from a vision to bridge the gap between businesses and transformative technology. What started as a small team of passionate developers has grown into a full-service digital agency serving clients worldwide.
                 </p>
-                <p>
+                <p className="text-left md:text-center">
                   We believe that technology should empower, not complicate. That's why we focus on creating solutions that are not only powerful and scalable but also intuitive and user-friendly.
                 </p>
-                <p>
+                <p className="text-left md:text-center">
                   Today, we're proud to have helped over 200+ businesses transform their digital presence, from startups to Fortune 500 companies.
                 </p>
               </div>
-            </div>
-            <div className="relative">
-              <div className="glass-card p-8 rounded-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" 
-                  alt="Team collaboration"
-                  className="rounded-xl w-full"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-accent to-primary rounded-full blur-3xl opacity-30 animate-pulse" />
             </div>
           </div>
         </div>
@@ -170,22 +161,30 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {team.map((member, index) => (
-              <div
-                key={index}
-                className="group glass-card p-6 rounded-2xl hover-lift transition-all duration-500"
-              >
-                <div className="relative mb-6 overflow-hidden rounded-xl">
-                  <img 
-                    src={member.image} 
-                    alt={member.name}
-                    className="w-full aspect-square object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{member.name}</h3>
-                <p className="text-muted-foreground">{member.role}</p>
+              <div key={index} className="group text-center transition-all duration-500">
+                {member.linkedin ? (
+                  <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="relative inline-block mb-6">
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="w-40 h-40 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-lg"
+                    />
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-accent transition-all duration-500" />
+                  </a>
+                ) : (
+                  <div className="relative inline-block mb-6">
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="w-40 h-40 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-lg"
+                    />
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-accent transition-all duration-500" />
+                  </div>
+                )}
+                <h3 className="text-xl font-bold mb-1">{member.name}</h3>
+                <p className="text-accent font-semibold">{member.role}</p>
               </div>
             ))}
           </div>

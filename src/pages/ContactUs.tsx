@@ -79,8 +79,8 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-bold mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                    <p className="text-muted-foreground">Mon-Fri 9am-6pm EST</p>
+                    <p className="text-muted-foreground">+251 912 207 180</p>
+                    <p className="text-muted-foreground">Mon-Sat 9am-6pm EAT</p>
                   </div>
                 </div>
 
@@ -92,8 +92,8 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-bold mb-1">Email</h3>
-                    <p className="text-muted-foreground">hello@afrodigital.com</p>
-                    <p className="text-muted-foreground">support@afrodigital.com</p>
+                    <p className="text-muted-foreground">info@afrodigital.et</p>
+                    <p className="text-muted-foreground">support@afrodigital.et</p>
                   </div>
                 </div>
 
@@ -105,8 +105,7 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-bold mb-1">Office</h3>
-                    <p className="text-muted-foreground">123 Tech Street</p>
-                    <p className="text-muted-foreground">San Francisco, CA 94102</p>
+                    <p className="text-muted-foreground">Addis Ababa, Ethiopia</p>
                   </div>
                 </div>
               </div>
@@ -189,7 +188,7 @@ const ContactUs = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="bg-background/50"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="+251 912 207 180"
                   />
                 </div>
 

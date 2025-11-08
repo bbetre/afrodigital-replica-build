@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -61,20 +62,24 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-            <Button 
-              size="lg" 
-              className="group bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow font-medium px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
-            >
-              Get Started
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="glass-card font-medium px-8 py-6 text-lg hover-lift"
-            >
-              View Our Work
-            </Button>
+            <Link to="/contact">
+              <Button 
+                size="lg" 
+                className="group bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow font-medium px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+              >
+                Get Started
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link to="/case-studies">
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="glass-card font-medium px-8 py-6 text-lg hover-lift"
+              >
+                View Our Work
+              </Button>
+            </Link>
           </div>
 
           {/* Stats Row */}

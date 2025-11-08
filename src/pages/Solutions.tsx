@@ -134,53 +134,45 @@ const Solutions = () => {
       {/* Solutions Grid */}
       <section ref={sectionRef} className="py-24 relative">
         <div className="container mx-auto px-6">
-          <div className="space-y-20">
+          <div className="grid lg:grid-cols-2 gap-8">
             {solutionCategories.map((category, categoryIndex) => {
               const CategoryIcon = category.icon;
               
               return (
                 <div
                   key={categoryIndex}
-                  className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                  className={`glass-card p-8 rounded-2xl hover-lift transition-all duration-300 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
                   style={{ animationDelay: `${categoryIndex * 0.1}s` }}
                 >
-                  <div className="flex items-center gap-4 mb-12">
+                  {/* Category Header */}
+                  <div className="flex items-center gap-4 mb-8">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-primary p-0.5">
                       <div className="w-full h-full bg-background rounded-xl flex items-center justify-center">
                         <CategoryIcon className="w-6 h-6 text-accent" />
                       </div>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold">{category.category}</h2>
+                    <h2 className="text-2xl font-bold">{category.category}</h2>
                   </div>
 
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* Solutions List */}
+                  <ul className="space-y-5">
                     {category.solutions.map((solution, index) => {
                       const SolutionIcon = solution.icon;
-                      
                       return (
-                        <div
-                          key={index}
-                          className="group glass-card p-6 rounded-xl hover-lift transition-all duration-500 border border-border/50 hover:border-accent/50"
-                        >
-                          <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-primary p-0.5 flex-shrink-0 group-hover:scale-110 transition-transform">
-                              <div className="w-full h-full bg-background rounded-lg flex items-center justify-center">
-                                <SolutionIcon className="w-5 h-5 text-accent" />
-                              </div>
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-bold mb-2 group-hover:text-accent transition-colors">
-                                {solution.name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {solution.description}
-                              </p>
-                            </div>
+                        <li key={index} className="flex items-start gap-4 group">
+                          <SolutionIcon className="w-5 h-5 text-accent mt-1 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                          <div>
+                            <h3 className="font-semibold group-hover:text-accent transition-colors">
+                              {solution.name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {solution.description}
+                            </p>
                           </div>
-                        </div>
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 </div>
               );
             })}

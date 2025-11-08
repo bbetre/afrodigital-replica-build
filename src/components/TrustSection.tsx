@@ -6,45 +6,45 @@ const TrustSection = () => {
 
   const clients = [
     {
-      name: "Microsoft",
-      logo: "Microsoft",
-      testimonial: "AfroDigital's cloud migration strategy saved us 40% in infrastructure costs",
-      author: "Sarah Chen, Cloud Architect",
+      name: "Tilexpharmalink",
+      logo: "https://www.tilexpharmalink.com/wp-content/uploads/2025/07/cropped-logo-1-black-copy.png",
+      testimonial: "AfroDigital's cloud migration and website building strategy saved us 40% in infrastructure costs",
+      author: "Alemayehu, Founder",
       metric: "40% cost reduction",
     },
     {
-      name: "AWS",
-      logo: "AWS",
+      name: "Medhhanet",
+      logo: "https://www.medhhanet.com/upload/site_settings/202201221117medhhanet_logo.png",
       testimonial: "Their serverless architecture expertise accelerated our product launch by 6 months",
-      author: "James Wilson, VP Engineering",
+      author: "Yohanes, Digital Director",
       metric: "6 months faster",
     },
     {
-      name: "Google Cloud",
-      logo: "Google Cloud",
+      name: "Ethio Pharma Link",
+      logo: "https://www.ethiopharmalink.com/wp-content/uploads/2022/06/logo-new.png",
       testimonial: "Best-in-class security implementation that exceeded our compliance requirements",
-      author: "Maria Garcia, CISO",
+      author: "Tigist, Owner",
       metric: "100% compliance",
     },
     {
-      name: "Salesforce",
-      logo: "Salesforce",
-      testimonial: "Seamless integration that unified our entire sales pipeline",
-      author: "David Kim, Sales Director",
+      name: "Hawassa University",
+      logo: "https://www.hu.edu.et//images/huimages/logos/hwu%20logo.png",
+      testimonial: "Flexible IT structures for online and offline learning during challenging times",
+      author: "Dr Dereba, IT Head",
       metric: "3x efficiency",
     },
     {
-      name: "Adobe",
-      logo: "Adobe",
+      name: "Cisco",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/640px-Cisco_logo_blue_2016.svg.png",
       testimonial: "Revolutionary AI-powered analytics transformed our customer insights",
       author: "Emma Thompson, Head of Data",
       metric: "10x insights",
     },
     {
-      name: "IBM",
-      logo: "IBM",
+      name: "Barok Consultancy",
+      logo: "https://logowik.com/content/uploads/images/ibm-2022-new9399.logowik.com.webp",
       testimonial: "Enterprise-grade solutions with startup-level agility",
-      author: "Robert Chang, CTO",
+      author: "",
       metric: "99.99% uptime",
     },
   ];
@@ -78,9 +78,7 @@ const TrustSection = () => {
               <div className="professional-card p-8 rounded-xl hover:shadow-elevated transition-all duration-300 flex items-center justify-center h-28 animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="text-xl font-bold text-foreground/40 group-hover:text-foreground/80 transition-colors">
-                  {client.logo}
-                </div>
+                <img src={client.logo} alt={`${client.name} logo`} className="h-10 w-auto object-contain grayscale group-hover:grayscale-0 transition-all" />
               </div>
 
               {/* Hover Card */}
@@ -113,10 +111,10 @@ const TrustSection = () => {
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
           {[
-            { value: "250+", label: "Enterprise Clients" },
-            { value: "15+", label: "Years Experience" },
+            { value: "112+", label: "Enterprise Clients" },
+            { value: "5+", label: "Years Experience" },
             { value: "98%", label: "Client Retention" },
-            { value: "50+", label: "Countries Served" },
+            { value: "10+", label: "Countries Served" },
           ].map((stat, i) => (
             <div key={i} className="text-center animate-fade-in-up" style={{ animationDelay: `${i * 0.1 + 0.6}s` }}>
               <div className="text-3xl md:text-4xl font-bold text-accent mb-2">

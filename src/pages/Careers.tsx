@@ -27,56 +27,7 @@ const benefits = [
   },
 ];
 
-const openings = [
-  {
-    title: "Senior Full Stack Developer",
-    department: "Engineering",
-    location: "Remote / San Francisco",
-    type: "Full-time",
-    description: "Build scalable applications using React, Node.js, and cloud technologies.",
-    requirements: ["5+ years experience", "React & Node.js", "Cloud platforms", "Team leadership"],
-  },
-  {
-    title: "UI/UX Designer",
-    department: "Design",
-    location: "Remote / New York",
-    type: "Full-time",
-    description: "Create beautiful, intuitive interfaces that delight users.",
-    requirements: ["3+ years experience", "Figma expert", "Design systems", "User research"],
-  },
-  {
-    title: "DevOps Engineer",
-    department: "Infrastructure",
-    location: "Remote",
-    type: "Full-time",
-    description: "Build and maintain our cloud infrastructure and CI/CD pipelines.",
-    requirements: ["4+ years experience", "AWS/Azure", "Kubernetes", "Automation"],
-  },
-  {
-    title: "Data Scientist",
-    department: "AI/ML",
-    location: "San Francisco",
-    type: "Full-time",
-    description: "Develop machine learning models and data-driven solutions.",
-    requirements: ["3+ years experience", "Python/R", "ML frameworks", "Statistics"],
-  },
-  {
-    title: "Product Manager",
-    department: "Product",
-    location: "Remote / San Francisco",
-    type: "Full-time",
-    description: "Lead product strategy and drive innovation across our product suite.",
-    requirements: ["5+ years experience", "Tech products", "Agile/Scrum", "Leadership"],
-  },
-  {
-    title: "Digital Marketing Specialist",
-    department: "Marketing",
-    location: "Remote",
-    type: "Full-time",
-    description: "Drive growth through strategic marketing campaigns and SEO.",
-    requirements: ["3+ years experience", "SEO/SEM", "Analytics", "Content strategy"],
-  },
-];
+const openings: any[] = [];
 
 const Careers = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -178,48 +129,16 @@ const Careers = () => {
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">
-            {openings.map((job, index) => (
-              <div
-                key={index}
-                className="glass-card p-6 md:p-8 rounded-2xl hover-lift transition-all duration-500 border border-border/50 hover:border-accent/50"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">{job.title}</h3>
-                    <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Briefcase className="w-4 h-4" />
-                        {job.department}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4" />
-                        {job.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {job.type}
-                      </span>
-                    </div>
-                  </div>
-                  <Button className="bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow whitespace-nowrap">
-                    Apply Now
-                  </Button>
-                </div>
-
-                <p className="text-muted-foreground mb-4">{job.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {job.requirements.map((req, idx) => (
-                    <span
-                      key={idx}
-                      className="glass-card px-3 py-1 rounded-full text-sm"
-                    >
-                      {req}
-                    </span>
-                  ))}
-                </div>
+            {openings.length > 0 ? (
+              openings.map((job, index) => (
+                // Job listing component here
+                <div key={index}>{job.title}</div>
+              ))
+            ) : (
+              <div className="text-center glass-card p-8 rounded-2xl">
+                <p className="text-muted-foreground text-lg">There are currently no open positions. Please check back later!</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
