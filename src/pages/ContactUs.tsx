@@ -4,30 +4,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
 
 const ContactUs = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    message: "",
-  });
+  const form = useRef<HTMLFormElement>(null);
+  const [isSending, setIsSending] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", company: "", phone: "", message: "" });
-  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (!form.current) return;
+    setIsSending(true);
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          toast({
+            title: "Message Sent!",
+            description: "We'll get back to you within 24 hours.",
+          });
+          form.current?.reset();
+        },
+        (error) => {
+          toast({
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem sending your message. Please try again.",
+            variant: "destructive",
+          });
+          console.error("FAILED...", error.text);
+        }
+      )
+      .finally(() => setIsSending(false));
   };
 
   return (
@@ -131,7 +147,7 @@ const ContactUs = () => {
 
             {/* Contact Form */}
             <div className="glass-card p-8 rounded-2xl">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     Full Name *
@@ -139,8 +155,6 @@ const ContactUs = () => {
                   <Input
                     id="name"
                     name="name"
-                    value={formData.name}
-                    onChange={handleChange}
                     required
                     className="bg-background/50"
                     placeholder="John Doe"
@@ -155,8 +169,6 @@ const ContactUs = () => {
                     id="email"
                     name="email"
                     type="email"
-                    value={formData.email}
-                    onChange={handleChange}
                     required
                     className="bg-background/50"
                     placeholder="john@example.com"
@@ -170,8 +182,6 @@ const ContactUs = () => {
                   <Input
                     id="company"
                     name="company"
-                    value={formData.company}
-                    onChange={handleChange}
                     className="bg-background/50"
                     placeholder="Your Company Inc."
                   />
@@ -185,8 +195,6 @@ const ContactUs = () => {
                     id="phone"
                     name="phone"
                     type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
                     className="bg-background/50"
                     placeholder="+251 912 207 180"
                   />
@@ -199,8 +207,6 @@ const ContactUs = () => {
                   <Textarea
                     id="message"
                     name="message"
-                    value={formData.message}
-                    onChange={handleChange}
                     required
                     rows={5}
                     className="bg-background/50 resize-none"
@@ -211,8 +217,9 @@ const ContactUs = () => {
                 <Button 
                   type="submit" 
                   className="w-full bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow group"
+                  disabled={isSending}
                 >
-                  Send Message
+                  {isSending ? "Sending..." : "Send Message"}
                   <Send className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </form>

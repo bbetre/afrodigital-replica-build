@@ -4,9 +4,11 @@ import {
   Cloud, Database, Lock, Zap, Smartphone, ShoppingCart, 
   BarChart, Mail, Search, Users, MessageSquare, Briefcase,
   Cpu, Network, FileText, Video, Headphones, Rocket,
-  Globe, Code, Shield, Sparkles, TrendingUp, Settings
+  Globe, Code, Shield, Sparkles, TrendingUp, Settings,
+  ArrowRight
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const solutionCategories = [
   {
@@ -105,97 +107,127 @@ const Solutions = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
-        
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <div className="inline-block glass-card px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in-up">
-            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-              Complete Solutions
-            </span>
+      <main>
+        {/* Hero Section */}
+        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
+          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
+                              linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }} />
+          
+          <div className="container mx-auto px-6 relative z-10 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6 animate-fade-in-up">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-sm font-medium text-accent">
+                Complete Solutions
+              </span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+              Every Technology Solution
+              <br />
+              <span className="text-accent">Your Business Needs</span>
+            </h1>
+            
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+              From development to deployment, security to strategy - we provide comprehensive technology solutions for modern businesses
+            </p>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            Every Technology Solution
-            <span className="block bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-              Your Business Needs
-            </span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            From development to deployment, security to strategy - we provide comprehensive technology solutions for modern businesses
-          </p>
-        </div>
-      </section>
+        </section>
 
-      {/* Solutions Grid */}
-      <section ref={sectionRef} className="py-24 relative">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-8">
-            {solutionCategories.map((category, categoryIndex) => {
-              const CategoryIcon = category.icon;
-              
-              return (
-                <div
-                  key={categoryIndex}
-                  className={`glass-card p-8 rounded-2xl hover-lift transition-all duration-300 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-                  style={{ animationDelay: `${categoryIndex * 0.1}s` }}
-                >
-                  {/* Category Header */}
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-primary p-0.5">
-                      <div className="w-full h-full bg-background rounded-xl flex items-center justify-center">
+        {/* Solutions Grid */}
+        <section ref={sectionRef} className="py-32 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
+          <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
+                              linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }} />
+          
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-5xl mx-auto space-y-24">
+              {solutionCategories.map((category, categoryIndex) => {
+                const CategoryIcon = category.icon;
+                const delay = `${categoryIndex * 0.1}s`;
+                
+                return (
+                  <div
+                    key={categoryIndex} 
+                    className={`transition-opacity duration-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                    style={{ animationDelay: delay }}
+                  >
+                    {/* Category Header */}
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center">
                         <CategoryIcon className="w-6 h-6 text-accent" />
                       </div>
+                      <h2 className="text-3xl font-bold text-foreground">
+                        {category.category}
+                      </h2>
                     </div>
-                    <h2 className="text-2xl font-bold">{category.category}</h2>
-                  </div>
 
-                  {/* Solutions List */}
-                  <ul className="space-y-5">
-                    {category.solutions.map((solution, index) => {
-                      const SolutionIcon = solution.icon;
-                      return (
-                        <li key={index} className="flex items-start gap-4 group">
-                          <SolutionIcon className="w-5 h-5 text-accent mt-1 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                          <div>
-                            <h3 className="font-semibold group-hover:text-accent transition-colors">
-                              {solution.name}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                              {solution.description}
-                            </p>
+                    {/* Solutions Grid */}
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {category.solutions.map((solution, index) => {
+                        const SolutionIcon = solution.icon;
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-start gap-4 p-4 rounded-xl bg-card/50 border border-border/50 hover:bg-primary/5 transition-colors"
+                          >
+                            <SolutionIcon className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
+                            <div className="flex-1">
+                              <h3 className="font-semibold text-foreground text-base mb-1">
+                                {solution.name}
+                              </h3>
+                              <p className="text-sm text-muted-foreground leading-snug">
+                                {solution.description}
+                              </p>
+                            </div>
                           </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-primary/10" />
+        </section>
         
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Don't See What You're Looking For?
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            We specialize in custom solutions. Let's discuss your unique needs and create something extraordinary together.
-          </p>
-          <button className="bg-gradient-to-r from-accent to-primary text-white px-8 py-4 rounded-lg font-medium hover:shadow-glow transition-all duration-300 hover:scale-105">
-            Get Custom Solution
-          </button>
-        </div>
-      </section>
+        {/* CTA Section */}
+        <section className="py-32 bg-accent text-accent-foreground">
+          <div className="container mx-auto text-center px-6">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-accent-foreground">
+                Don't See What You're Looking For?
+              </h2>
+              <p className="text-xl text-accent-foreground/90 max-w-2xl mx-auto mb-8">
+                We specialize in custom solutions. Let's discuss your unique needs and create something extraordinary together.
+              </p>
+              <Link
+                to="/contact"
+                className="inline-flex items-center bg-background text-accent font-semibold px-8 py-4 rounded-lg hover:bg-background/90 transition-colors group"
+              >
+                Get Custom Solution
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>

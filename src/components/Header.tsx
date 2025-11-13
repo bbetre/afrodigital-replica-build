@@ -20,10 +20,11 @@ const Header = () => {
 
   // Define navigation links
   const navLinks = [
+    { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
     { name: "Solutions", path: "/solutions" },
-    { name: "Case Studies", path: "/case-studies" },
+    { name: "Careers", path: "/careers" },
   ];
 
   return (
@@ -53,7 +54,11 @@ const Header = () => {
 
         <div className="flex items-center gap-2">
           <Link to="/contact">
-            <Button className="hidden md:flex bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow font-medium px-5 py-2 text-sm transition-all duration-300 hover:scale-105 whitespace-nowrap">
+            <Button
+              className={`hidden md:flex bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow font-medium text-sm transition-all duration-300 hover:scale-105 whitespace-nowrap ${
+                scrolled ? "px-4 py-1.5" : "px-5 py-2"
+              }`}
+            >
               Let's Talk
             </Button>
           </Link>

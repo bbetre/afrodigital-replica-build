@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CtaSection = () => {
   return (
@@ -21,7 +22,7 @@ const CtaSection = () => {
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 max-w-4xl mx-auto text-primary-foreground">
           Free Your Team from Complexity.
           <br />
-          <span className="bg-gradient-to-r from-accent via-amber-400 to-accent bg-clip-text text-transparent bg-200% animate-gradient-shift">
+          <span className="text-foreground">
             Focus on What Matters.
           </span>
         </h2>
@@ -32,20 +33,24 @@ const CtaSection = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button 
-            size="lg" 
-            className="group bg-accent text-white hover:bg-accent/90 hover:shadow-glow font-medium px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
-          >
-            Schedule a Consultation
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="bg-primary-foreground/10 text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/20 font-medium px-8 py-6 text-lg backdrop-blur-sm"
-          >
-            View Case Studies
-          </Button>
+          <Link to="/contact">
+            <Button 
+              size="lg" 
+              className="group bg-accent text-white hover:bg-accent/90 hover:shadow-glow font-medium px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+            >
+              Schedule a Consultation
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+          <Link to="/case-studies">
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="bg-primary-foreground/10 text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/20 font-medium px-8 py-6 text-lg backdrop-blur-sm"
+            >
+              View Case Studies
+            </Button>
+          </Link>
         </div>
 
         {/* Trust indicators */}

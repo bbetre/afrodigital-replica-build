@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 const LiveMetricsDashboard = () => {
   const [metrics, setMetrics] = useState([
-    { label: "Projects in Progress", value: 42, icon: Activity, trend: "+12%", color: "text-blue-600" },
-    { label: "Avg. Response Time", value: "< 2h", icon: Clock, trend: "Fast", color: "text-green-600" },
-    { label: "Security Alerts Resolved", value: 1247, icon: Shield, trend: "+8%", color: "text-purple-600" },
-    { label: "Active Clients", value: 180, icon: Users, trend: "+15%", color: "text-indigo-600" },
-    { label: "System Uptime", value: "99.9%", icon: Zap, trend: "Stable", color: "text-emerald-600" },
-    { label: "Performance Score", value: 98, icon: TrendingUp, trend: "+3%", color: "text-cyan-600" },
+    { label: "Projects in Progress", value: 42, icon: Activity, trend: "+12%", color: "text-accent" },
+    { label: "Avg. Response Time", value: "< 2h", icon: Clock, trend: "Fast", color: "text-accent" },
+    { label: "Security Alerts Resolved", value: 1247, icon: Shield, trend: "+8%", color: "text-accent" },
+    { label: "Active Clients", value: 180, icon: Users, trend: "+15%", color: "text-accent" },
+    { label: "System Uptime", value: "99.9%", icon: Zap, trend: "Stable", color: "text-accent" },
+    { label: "Performance Score", value: 98, icon: TrendingUp, trend: "+3%", color: "text-accent" },
   ]);
 
   const [animated, setAnimated] = useState(false);
@@ -43,16 +43,16 @@ const LiveMetricsDashboard = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex items-start justify-between mb-4">
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${metric.color.replace('text-', 'from-')}/10 ${metric.color.replace('text-', 'to-')}/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <metric.icon className={`w-6 h-6 ${metric.color}`} />
+                <div className="w-12 h-12 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <metric.icon className="w-6 h-6 text-accent" />
                 </div>
-                <div className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                <div className="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded-full">
                   {metric.trend}
                 </div>
               </div>
               
               <div className="space-y-1">
-                <div className={`text-3xl font-bold ${metric.color} transition-all duration-1000 ${animated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <div className={`text-3xl font-bold text-accent transition-all duration-1000 ${animated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                   {typeof metric.value === 'number' ? metric.value.toLocaleString() : metric.value}
                 </div>
                 <div className="text-sm text-muted-foreground font-medium">
@@ -69,8 +69,8 @@ const LiveMetricsDashboard = () => {
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <div className="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
+                  <div className="w-3 h-3 bg-accent rounded-full animate-pulse"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-accent rounded-full animate-ping"></div>
                 </div>
                 <span className="text-sm font-semibold">All Systems Operational</span>
               </div>

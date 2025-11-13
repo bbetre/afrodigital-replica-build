@@ -1,13 +1,11 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
-import SecurityDashboardDemo from "@/components/SecurityDashboardDemo";
 import TrustSection from "@/components/TrustSection";
-import TechStackShowcase from "@/components/TechStackShowcase";
+import TechnologyStackSection from "@/components/TechnologyStackSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TechRadar from "@/components/TechRadar";
 import CtaSection from "@/components/CtaSection";
-import FeaturesSection from "@/components/FeaturesSection";
 import StatsSection from "@/components/StatsSection";
 import Footer from "@/components/Footer";
 
@@ -19,11 +17,9 @@ const Index = () => {
         <HeroSection />
         <ServicesSection />
         <TrustSection />
-        <TechStackShowcase />
+        <TechnologyStackSection />
         <ProcessTimeline />
-        <SecurityDashboardDemo />
         <TechRadar />
-        <FeaturesSection />
         <StatsSection />
         <CtaSection />
       </main>

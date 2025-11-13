@@ -9,7 +9,7 @@ const TechRadar = () => {
       quarter: "Q2 2025",
       description: "Intelligent automation for deployment, monitoring, and optimization",
       progress: 65,
-      color: "from-purple-500 to-purple-700",
+      color: "from-primary to-accent",
     },
     {
       icon: Cpu,
@@ -18,7 +18,7 @@ const TechRadar = () => {
       quarter: "Q3 2025",
       description: "Distributed computing infrastructure for ultra-low latency",
       progress: 55,
-      color: "from-green-500 to-green-700",
+      color: "from-accent to-primary",
     },
     {
       icon: Zap,
@@ -27,22 +27,22 @@ const TechRadar = () => {
       quarter: "Q1 2025",
       description: "Process billions of events per second with sub-millisecond latency",
       progress: 80,
-      color: "from-orange-500 to-orange-700",
+      color: "from-primary to-accent",
     },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Beta Testing":
-        return "bg-green-50 text-green-700 border-green-200";
+        return "bg-accent/10 text-accent border-accent/20";
       case "In Development":
-        return "bg-blue-50 text-blue-700 border-blue-200";
+        return "bg-accent/10 text-accent border-accent/20";
       case "Pilot Program":
-        return "bg-purple-50 text-purple-700 border-purple-200";
+        return "bg-accent/10 text-accent border-accent/20";
       case "Research Phase":
-        return "bg-gray-50 text-gray-700 border-gray-200";
+        return "bg-muted text-muted-foreground border-border";
       default:
-        return "bg-gray-50 text-gray-700 border-gray-200";
+        return "bg-muted text-muted-foreground border-border";
     }
   };
 
@@ -72,8 +72,8 @@ const TechRadar = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex items-start justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${innovation.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <innovation.icon className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <innovation.icon className="w-6 h-6 text-accent" />
                 </div>
                 <div className={`text-xs font-semibold px-2 py-1 rounded-full border ${getStatusColor(innovation.status)}`}>
                   {innovation.status}
@@ -95,7 +95,7 @@ const TechRadar = () => {
                 </div>
                 <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
                   <div
-                    className={`h-full bg-gradient-to-r ${innovation.color} transition-all duration-1000`}
+                    className="h-full bg-accent transition-all duration-1000"
                     style={{ width: `${innovation.progress}%` }}
                   />
                 </div>

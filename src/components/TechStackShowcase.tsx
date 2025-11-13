@@ -6,45 +6,44 @@ const TechStackShowcase = () => {
       icon: Code2, 
       name: "Frontend", 
       techs: ["React", "Next.js", "Vue.js", "TypeScript"],
-      color: "from-blue-500 to-cyan-500"
+      color: "from-primary to-accent"
     },
     { 
       icon: Database, 
       name: "Backend", 
       techs: ["Node.js", "Python", "Go", "PostgreSQL"],
-      color: "from-green-500 to-emerald-500"
+      color: "from-slate-600 to-slate-700"
     },
     { 
       icon: Cloud, 
       name: "Cloud", 
       techs: ["AWS", "Azure", "GCP", "Docker"],
-      color: "from-purple-500 to-pink-500"
+      color: "from-gray-600 to-gray-700"
     },
     { 
       icon: Shield, 
       name: "Security", 
       techs: ["OAuth", "JWT", "SSL/TLS", "Encryption"],
-      color: "from-red-500 to-orange-500"
+      color: "from-zinc-600 to-zinc-700"
     },
     { 
       icon: Cpu, 
       name: "AI/ML", 
       techs: ["TensorFlow", "PyTorch", "OpenAI", "LangChain"],
-      color: "from-yellow-500 to-amber-500"
+      color: "from-neutral-600 to-neutral-700"
     },
     { 
       icon: Zap, 
       name: "DevOps", 
       techs: ["CI/CD", "Kubernetes", "Jenkins", "Terraform"],
-      color: "from-indigo-500 to-violet-500"
+      color: "from-primary to-slate-700"
     },
   ];
 
   return (
     <section className="relative py-32 overflow-hidden bg-gradient-to-br from-background via-primary/5 to-background">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,107,53,0.1),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,163,255,0.1),transparent_50%)]" />
+      <div className="absolute inset-0 bg-accent/3" />
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-20 animate-fade-in-up">
@@ -54,12 +53,10 @@ const TechStackShowcase = () => {
               Technology Stack
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-foreground to-accent bg-clip-text text-transparent">
-              Powered by Cutting-Edge
-            </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
+            Powered by Cutting-Edge
             <br />
-            <span className="text-foreground">Technology</span>
+            <span className="text-accent">Technology</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             We leverage the latest technologies to build scalable, secure, and high-performance solutions
@@ -74,11 +71,11 @@ const TechStackShowcase = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Gradient background on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              <div className="absolute inset-0 bg-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative z-10">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tech.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-glow`}>
-                  <tech.icon className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 group-hover:bg-accent/15 group-hover:border-accent/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                  <tech.icon className="w-8 h-8 text-accent" />
                 </div>
                 
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-accent transition-colors">
