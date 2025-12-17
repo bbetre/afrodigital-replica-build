@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { 
-  Cloud, Database, Lock, Zap, Smartphone, ShoppingCart, 
+import {
+  Cloud, Database, Lock, Zap, Smartphone, ShoppingCart,
   BarChart, Mail, Search, Users, MessageSquare, Briefcase,
   Cpu, Network, FileText, Video, Headphones, Rocket,
   Globe, Code, Shield, Sparkles, TrendingUp, Settings,
@@ -109,21 +109,22 @@ const Solutions = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
-      
+
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20">
+        {/* Hero Section */}
+        <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-20">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
-          
+          <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-accent/5 rounded-full blur-[80px] md:blur-[120px] animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-primary/5 rounded-full blur-[60px] md:blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
+
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 opacity-[0.02]" style={{
             backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
                               linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
             backgroundSize: '50px 50px'
           }} />
-          
+
           <div className="container mx-auto px-6 relative z-10 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6 animate-fade-in-up">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -131,40 +132,40 @@ const Solutions = () => {
                 Complete Solutions
               </span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
               Every Technology Solution
               <br />
               <span className="text-accent">Your Business Needs</span>
             </h1>
-            
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
               From development to deployment, security to strategy - we provide comprehensive technology solutions for modern businesses
             </p>
           </div>
         </section>
 
         {/* Solutions Grid */}
-        <section ref={sectionRef} className="py-32 relative overflow-hidden">
+        <section ref={sectionRef} className="py-16 md:py-32 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
           <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
-          
+
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 opacity-[0.02]" style={{
             backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
                               linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
             backgroundSize: '50px 50px'
           }} />
-          
+
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-5xl mx-auto space-y-24">
               {solutionCategories.map((category, categoryIndex) => {
                 const CategoryIcon = category.icon;
                 const delay = `${categoryIndex * 0.1}s`;
-                
+
                 return (
                   <div
-                    key={categoryIndex} 
+                    key={categoryIndex}
                     className={`transition-opacity duration-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
                     style={{ animationDelay: delay }}
                   >
@@ -206,7 +207,7 @@ const Solutions = () => {
             </div>
           </div>
         </section>
-        
+
         {/* CTA Section */}
         <section className="py-32 bg-accent text-accent-foreground">
           <div className="container mx-auto text-center px-6">

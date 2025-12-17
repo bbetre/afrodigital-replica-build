@@ -57,10 +57,11 @@ const AboutUs = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-16">
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
+        {/* Hero Section */}
+        <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16 bg-gradient-to-b from-background via-primary/5 to-background">
+          {/* Background Elements */}
+          <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-accent/5 rounded-full blur-[80px] md:blur-[120px] animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-primary/5 rounded-full blur-[60px] md:blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
 
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 opacity-[0.02]" style={{
@@ -77,13 +78,13 @@ const AboutUs = () => {
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
               Building the Future of
               <br />
               <span className="text-accent">Digital Innovation</span>
             </h1>
 
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
               We're a team of passionate innovators dedicated to transforming businesses through cutting-edge technology and strategic digital solutions.
             </p>
           </div>

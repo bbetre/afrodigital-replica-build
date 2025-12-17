@@ -3,6 +3,13 @@ import Footer from "@/components/Footer";
 import { Code, Globe, Shield, Sparkles, TrendingUp, CheckCircle2, ArrowRight, Cloud } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState, useMemo } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const services = [
   {
@@ -82,7 +89,7 @@ const services = [
   },
   {
     icon: Cloud,
-    title: "Automation, Cloud & DevOps",
+    title: "Cloud & DevOps",
     description: "Streamline your operations with our comprehensive cloud infrastructure and automation solutions. We help you migrate to the cloud, set up CI/CD pipelines, and implement Infrastructure as Code (IaC) to ensure scalability and reliability.",
     features: [
       "Cloud Migration & Strategy",
@@ -120,21 +127,21 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
-      
+
       <main>
         {/* Hero Section */}
-        <section ref={heroRef} className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20">
+        <section ref={heroRef} className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-20">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
-          
+          <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-accent/5 rounded-full blur-[80px] md:blur-[120px] animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-primary/5 rounded-full blur-[60px] md:blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
+
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 opacity-[0.02]" style={{
             backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
                               linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
             backgroundSize: '50px 50px'
           }} />
-          
+
           <div className="container mx-auto px-6 relative z-10 text-center">
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -142,25 +149,41 @@ const Services = () => {
                 Our Services
               </span>
             </div>
-            
-            <h1 className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: "0.1s" }}>
+
+            <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: "0.1s" }}>
               Comprehensive Digital
               <br />
               <span className="text-accent">Solutions</span>
             </h1>
-            
-            <p className={`text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: "0.2s" }}>
+
+            <p className={`text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: "0.2s" }}>
               From concept to deployment, we deliver excellence across every digital touchpoint with cutting-edge technology and expert craftsmanship.
             </p>
           </div>
         </section>
 
         {/* Services Detail Section */}
-        <section className="pt-16 pb-32 relative overflow-hidden">
+        <section className="pt-8 pb-32 md:pt-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
           <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] animate-float" />
-          
-          <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-3 gap-16">
+
+          <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-3 gap-8 md:gap-16">
+
+            {/* Mobile Service Selector */}
+            <div className="block lg:hidden mb-4">
+              <label className="text-sm font-medium text-muted-foreground mb-2 block">Select Service</label>
+              <Select onValueChange={setActiveService} defaultValue={activeService}>
+                <SelectTrigger className="w-full bg-card border-border/50">
+                  <SelectValue placeholder="Select a service" />
+                </SelectTrigger>
+                <SelectContent>
+                  {services.map((service) => (
+                    <SelectItem key={service.slug} value={service.slug}>{service.title}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             {/* Sticky Nav */}
             <aside className="hidden lg:block lg:col-span-1">
               <div className="sticky top-32">
@@ -171,11 +194,10 @@ const Services = () => {
                       <li key={service.slug}>
                         <button
                           onClick={() => setActiveService(service.slug)}
-                          className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ${
-                            activeService === service.slug
-                              ? 'bg-accent/10 text-accent font-semibold'
-                              : 'text-muted-foreground hover:bg-primary/5 hover:text-foreground'
-                          } w-full text-left`}
+                          className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ${activeService === service.slug
+                            ? 'bg-accent/10 text-accent font-semibold'
+                            : 'text-muted-foreground hover:bg-primary/5 hover:text-foreground'
+                            } w-full text-left`}
                         >
                           <service.icon className="w-5 h-5 flex-shrink-0" />
                           <span className="text-sm">{service.title}</span>
@@ -254,7 +276,7 @@ const Services = () => {
         {/* Process Timeline */}
         <section className="py-32 relative overflow-hidden bg-primary/5">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px]" />
-          
+
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center mb-20">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6">
@@ -281,13 +303,12 @@ const Services = () => {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className={`professional-card p-8 rounded-2xl border border-border/50 hover:border-accent/30 hover:shadow-elevated hover:-translate-y-2 transition-all duration-500 group ${
-                    isVisible ? 'animate-fade-in-up' : 'opacity-0'
-                  }`}
+                  className={`professional-card p-8 rounded-2xl border border-border/50 hover:border-accent/30 hover:shadow-elevated hover:-translate-y-2 transition-all duration-500 group ${isVisible ? 'animate-fade-in-up' : 'opacity-0'
+                    }`}
                   style={{ animationDelay: `${idx * 0.1}s` }}
                 >
                   <div className="absolute inset-0 bg-accent/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                  
+
                   <div className="relative z-10">
                     <div className="text-5xl font-bold text-accent/20 mb-4 group-hover:text-accent/30 transition-colors">
                       {item.step}

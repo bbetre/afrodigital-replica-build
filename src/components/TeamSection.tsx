@@ -138,9 +138,9 @@ const TeamSection = () => {
             </div>
 
             <Dialog open={!!selectedMember} onOpenChange={(open) => !open && setSelectedMember(null)}>
-                <DialogContent className="sm:max-w-5xl bg-card/95 backdrop-blur-xl border-accent/20 p-0 overflow-hidden shadow-2xl">
+                <DialogContent className="sm:max-w-5xl bg-card/95 backdrop-blur-xl border-accent/20 p-0 overflow-hidden shadow-2xl max-h-[90vh] md:max-h-none">
                     {selectedMember && (
-                        <div className="flex flex-col md:flex-row h-[85vh] md:h-auto">
+                        <div className="flex flex-col md:flex-row h-full md:h-auto">
                             {/* Image Side */}
                             <div className="w-full md:w-1/2 h-64 md:h-auto relative shrink-0">
                                 <img
@@ -152,18 +152,18 @@ const TeamSection = () => {
                             </div>
 
                             {/* Content Side */}
-                            <div className="flex-1 p-8 md:p-12 flex flex-col justify-center relative overflow-y-auto">
-                                <DialogHeader className="mb-8 text-left">
-                                    <DialogTitle className="text-4xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">
+                            <div className="flex-1 p-6 md:p-12 flex flex-col justify-center relative overflow-y-auto">
+                                <DialogHeader className="mb-6 md:mb-8 text-left">
+                                    <DialogTitle className="text-3xl md:text-5xl font-bold text-foreground mb-2 md:mb-3 tracking-tight">
                                         {selectedMember.name}
                                     </DialogTitle>
-                                    <DialogDescription className="text-accent font-bold uppercase tracking-widest text-base md:text-lg">
+                                    <DialogDescription className="text-accent font-bold uppercase tracking-widest text-sm md:text-lg">
                                         {selectedMember.role}
                                     </DialogDescription>
                                 </DialogHeader>
 
-                                <div className="space-y-8">
-                                    <p className="text-lg text-muted-foreground leading-relaxed font-light">
+                                <div className="space-y-6 md:space-y-8">
+                                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed font-light">
                                         {selectedMember.description}
                                     </p>
 

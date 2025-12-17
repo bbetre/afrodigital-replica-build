@@ -1,16 +1,26 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, Briefcase, TrendingUp, Users, Heart, Rocket, Award } from "lucide-react";
-import { useEffect, useRef, useState, FormEvent } from "react";
+import { MapPin, Clock, TrendingUp, Heart, Rocket, Award, Users } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import emailjs from "@emailjs/browser";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { submitJobApplication } from "@/services/jobService";
 
 const benefits = [
   {
@@ -78,16 +88,62 @@ const openings = [
   },
 ];
 
+// Form Schemas
+const generalApplicationSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  resume: z.string().url("Please enter a valid URL"),
+  message: z.string().optional(),
+});
+
+const quickApplySchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  experience: z.string({ required_error: "Please select your experience" }),
+  availability: z.string().min(2, "Please specify your availability"),
+  resume: z.string().url("Please enter a valid URL"),
+  linkedin: z.string().url("Please enter a valid LinkedIn URL"),
+  github: z.string().url("Please enter a valid GitHub URL").optional().or(z.literal("")),
+  portfolio: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
+  message: z.string().min(50, "Please provide a cover letter (min 50 characters)"),
+  jobTitle: z.string(),
+});
+
 const Careers = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { toast } = useToast();
-  const form = useRef<HTMLFormElement>(null);
-  const quickApplyForm = useRef<HTMLFormElement>(null);
-  const [isSending, setIsSending] = useState(false);
   const [isQuickApplyOpen, setIsQuickApplyOpen] = useState(false);
   const [applyingForJob, setApplyingForJob] = useState<string | null>(null);
-  const [isQuickApplySending, setIsQuickApplySending] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // General Application Form
+  const generalForm = useForm<z.infer<typeof generalApplicationSchema>>({
+    resolver: zodResolver(generalApplicationSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      resume: "",
+      message: "",
+    },
+  });
+
+  // Quick Apply Form
+  const quickApplyForm = useForm<z.infer<typeof quickApplySchema>>({
+    resolver: zodResolver(quickApplySchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      availability: "",
+      resume: "",
+      linkedin: "",
+      github: "",
+      portfolio: "",
+      message: "",
+      jobTitle: "",
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -106,83 +162,56 @@ const Careers = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!form.current) return;
+  useEffect(() => {
+    if (applyingForJob) {
+      quickApplyForm.setValue("jobTitle", applyingForJob);
+    }
+  }, [applyingForJob, quickApplyForm]);
 
-    setIsSending(true);
-
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_CAREERS_TEMPLATE_ID,
-        form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          toast({
-            title: "Application Sent!",
-            description: "Thank you for your interest. We'll be in touch if there's a good fit.",
-          });
-          form.current?.reset();
-          setIsQuickApplyOpen(false);
-        },
-        (error) => {
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "There was a problem sending your application. Please try again.",
-            variant: "destructive",
-          });
-          console.error("FAILED...", error.text);
-        }
-      )
-      .finally(() => setIsSending(false));
+  const onGeneralSubmit = async (data: z.infer<typeof generalApplicationSchema>) => {
+    try {
+      await submitJobApplication(data);
+      toast({
+        title: "Application Sent!",
+        description: "Thank you for your interest. We'll be in touch if there's a good fit.",
+      });
+      generalForm.reset();
+    } catch (error) {
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your application. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleQuickApply = (e: FormEvent) => {
-    e.preventDefault();
-    if (!quickApplyForm.current) return;
-
-    setIsQuickApplySending(true);
-
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_CAREERS_TEMPLATE_ID,
-        quickApplyForm.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          toast({
-            title: "Application Sent!",
-            description: "Thank you for applying! We'll review your application and get back to you soon.",
-          });
-          quickApplyForm.current?.reset();
-          setIsQuickApplyOpen(false);
-        },
-        (error) => {
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "There was a problem sending your application. Please try again.",
-            variant: "destructive",
-          });
-          console.error("FAILED...", error.text);
-        }
-      )
-      .finally(() => setIsQuickApplySending(false));
+  const onQuickApplySubmit = async (data: z.infer<typeof quickApplySchema>) => {
+    try {
+      await submitJobApplication(data);
+      toast({
+        title: "Application Sent!",
+        description: "Thank you for applying! We'll review your application and get back to you soon.",
+      });
+      quickApplyForm.reset();
+      setIsQuickApplyOpen(false);
+    } catch (error) {
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your application. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
     <div className="min-h-screen">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
-        
+
         <div className="container mx-auto px-6 relative z-10 text-center">
           <div className="inline-block glass-card px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in-up">
             <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
@@ -219,9 +248,8 @@ const Careers = () => {
               return (
                 <div
                   key={index}
-                  className={`glass-card p-8 rounded-2xl hover-lift transition-all duration-500 ${
-                    isVisible ? 'animate-fade-in-up' : 'opacity-0'
-                  }`}
+                  className={`glass-card p-8 rounded-2xl hover-lift transition-all duration-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'
+                    }`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent to-primary p-0.5 mb-6">
@@ -241,7 +269,7 @@ const Careers = () => {
       {/* Open Positions */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
-        
+
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -294,7 +322,7 @@ const Careers = () => {
                             </ul>
                           </div>
                         </div>
-                        <Button 
+                        <Button
                           onClick={() => {
                             setApplyingForJob(job.title);
                             setIsQuickApplyOpen(true);
@@ -330,47 +358,77 @@ const Careers = () => {
                 We're always looking for talented people. Send us your resume and we'll keep you in mind for future opportunities.
               </p>
             </div>
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">Full Name *</label>
-                  <Input id="name" name="name" required className="bg-background/50" placeholder="John Doe" />
+
+            <Form {...generalForm}>
+              <form onSubmit={generalForm.handleSubmit(onGeneralSubmit)} className="space-y-6">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <FormField
+                    control={generalForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name *</FormLabel>
+                        <FormControl>
+                          <Input className="bg-background/50" placeholder="John Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={generalForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email Address *</FormLabel>
+                        <FormControl>
+                          <Input className="bg-background/50" placeholder="john@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">Email Address *</label>
-                  <Input id="email" name="email" type="email" required className="bg-background/50" placeholder="john@example.com" />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="resume" className="block text-sm font-medium mb-2">Resume/CV Link *</label>
-                <Input 
-                  id="resume" 
-                  name="resume" 
-                  type="url" 
-                  required 
-                  className="bg-background/50"
-                  placeholder="https://docs.google.com/document/d/..."
+                <FormField
+                  control={generalForm.control}
+                  name="resume"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Resume/CV Link *</FormLabel>
+                      <FormControl>
+                        <Input className="bg-background/50" placeholder="https://docs.google.com/document/d/..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                <p className="text-xs text-muted-foreground mt-2">Please provide a public link to your resume (e.g., Google Docs).</p>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">Cover Letter (Optional)</label>
-                <Textarea
-                  id="message"
+                <FormField
+                  control={generalForm.control}
                   name="message"
-                  rows={4}
-                  className="bg-background/50 resize-none"
-                  placeholder="Tell us why you'd be a great fit for AfroDigital..."
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cover Letter (Optional)</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          rows={4}
+                          className="bg-background/50 resize-none"
+                          placeholder="Tell us why you'd be a great fit for AfroDigital..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <Button 
-                type="submit" 
-                className="w-full bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow"
-                disabled={isSending}
-              >
-                {isSending ? "Submitting..." : "Submit Application"}
-              </Button>
-            </form>
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow"
+                  disabled={generalForm.formState.isSubmitting}
+                >
+                  {generalForm.formState.isSubmitting ? "Submitting..." : "Submit Application"}
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
       </section>
@@ -386,186 +444,200 @@ const Careers = () => {
               Fill out the form below to submit your application. All fields marked with * are required.
             </DialogDescription>
           </DialogHeader>
-          
-          <form ref={quickApplyForm} onSubmit={handleQuickApply} className="space-y-6 mt-4">
-            {/* Hidden field for job title */}
-            <input type="hidden" name="job_title" value={applyingForJob || ""} />
-            
-            {/* Full Name */}
-            <div>
-              <label htmlFor="quick_name" className="block text-sm font-medium mb-2">
-                Full Name *
-              </label>
-              <Input
-                id="quick_name"
+
+          <Form {...quickApplyForm}>
+            <form onSubmit={quickApplyForm.handleSubmit(onQuickApplySubmit)} className="space-y-6 mt-4">
+              {/* Full Name */}
+              <FormField
+                control={quickApplyForm.control}
                 name="name"
-                required
-                className="bg-background/50"
-                placeholder="John Doe"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name *</FormLabel>
+                    <FormControl>
+                      <Input className="bg-background/50" placeholder="John Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Email and Phone */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="quick_email" className="block text-sm font-medium mb-2">
-                  Email Address *
-                </label>
-                <Input
-                  id="quick_email"
+              {/* Email and Phone */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FormField
+                  control={quickApplyForm.control}
                   name="email"
-                  type="email"
-                  required
-                  className="bg-background/50"
-                  placeholder="john@example.com"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email Address *</FormLabel>
+                      <FormControl>
+                        <Input className="bg-background/50" placeholder="john@example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div>
-                <label htmlFor="quick_phone" className="block text-sm font-medium mb-2">
-                  Phone Number *
-                </label>
-                <Input
-                  id="quick_phone"
+                <FormField
+                  control={quickApplyForm.control}
                   name="phone"
-                  type="tel"
-                  required
-                  className="bg-background/50"
-                  placeholder="+1 (555) 123-4567"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number *</FormLabel>
+                      <FormControl>
+                        <Input className="bg-background/50" placeholder="+1 (555) 123-4567" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-            </div>
 
-            {/* Years of Experience and Availability */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="quick_experience" className="block text-sm font-medium mb-2">
-                  Years of Experience *
-                </label>
-                <Select name="experience" required>
-                  <SelectTrigger id="quick_experience" className="bg-background/50">
-                    <SelectValue placeholder="Select experience" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0-1">0-1 years</SelectItem>
-                    <SelectItem value="1-3">1-3 years</SelectItem>
-                    <SelectItem value="3-5">3-5 years</SelectItem>
-                    <SelectItem value="5-7">5-7 years</SelectItem>
-                    <SelectItem value="7-10">7-10 years</SelectItem>
-                    <SelectItem value="10+">10+ years</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label htmlFor="quick_availability" className="block text-sm font-medium mb-2">
-                  Availability / Notice Period *
-                </label>
-                <Input
-                  id="quick_availability"
+              {/* Years of Experience and Availability */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FormField
+                  control={quickApplyForm.control}
+                  name="experience"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Years of Experience *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-background/50">
+                            <SelectValue placeholder="Select experience" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="0-1">0-1 years</SelectItem>
+                          <SelectItem value="1-3">1-3 years</SelectItem>
+                          <SelectItem value="3-5">3-5 years</SelectItem>
+                          <SelectItem value="5-7">5-7 years</SelectItem>
+                          <SelectItem value="7-10">7-10 years</SelectItem>
+                          <SelectItem value="10+">10+ years</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={quickApplyForm.control}
                   name="availability"
-                  required
-                  className="bg-background/50"
-                  placeholder="Immediate / 2 weeks / 1 month"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Availability / Notice Period *</FormLabel>
+                      <FormControl>
+                        <Input className="bg-background/50" placeholder="Immediate / 2 weeks / 1 month" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-            </div>
 
-            {/* Resume/CV Link */}
-            <div>
-              <label htmlFor="quick_resume" className="block text-sm font-medium mb-2">
-                Resume/CV Link *
-              </label>
-              <Input
-                id="quick_resume"
+              {/* Resume/CV Link */}
+              <FormField
+                control={quickApplyForm.control}
                 name="resume"
-                type="url"
-                required
-                className="bg-background/50"
-                placeholder="https://docs.google.com/document/d/..."
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Resume/CV Link *</FormLabel>
+                    <FormControl>
+                      <Input className="bg-background/50" placeholder="https://docs.google.com/document/d/..." {...field} />
+                    </FormControl>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Provide a public link to your resume (Google Docs, Dropbox, etc.)
+                    </p>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              <p className="text-xs text-muted-foreground mt-1">
-                Provide a public link to your resume (Google Docs, Dropbox, etc.)
-              </p>
-            </div>
 
-            {/* LinkedIn Profile */}
-            <div>
-              <label htmlFor="quick_linkedin" className="block text-sm font-medium mb-2">
-                LinkedIn Profile *
-              </label>
-              <Input
-                id="quick_linkedin"
+              {/* LinkedIn Profile */}
+              <FormField
+                control={quickApplyForm.control}
                 name="linkedin"
-                type="url"
-                required
-                className="bg-background/50"
-                placeholder="https://linkedin.com/in/yourprofile"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>LinkedIn Profile *</FormLabel>
+                    <FormControl>
+                      <Input className="bg-background/50" placeholder="https://linkedin.com/in/yourprofile" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* GitHub and Portfolio */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="quick_github" className="block text-sm font-medium mb-2">
-                  GitHub Profile *
-                </label>
-                <Input
-                  id="quick_github"
+              {/* GitHub and Portfolio */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FormField
+                  control={quickApplyForm.control}
                   name="github"
-                  type="url"
-                  required
-                  className="bg-background/50"
-                  placeholder="https://github.com/yourusername"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>GitHub Profile</FormLabel>
+                      <FormControl>
+                        <Input className="bg-background/50" placeholder="https://github.com/yourusername" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div>
-                <label htmlFor="quick_portfolio" className="block text-sm font-medium mb-2">
-                  Portfolio Website
-                </label>
-                <Input
-                  id="quick_portfolio"
+                <FormField
+                  control={quickApplyForm.control}
                   name="portfolio"
-                  type="url"
-                  className="bg-background/50"
-                  placeholder="https://yourportfolio.com"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Portfolio Website</FormLabel>
+                      <FormControl>
+                        <Input className="bg-background/50" placeholder="https://yourportfolio.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-            </div>
 
-            {/* Cover Letter */}
-            <div>
-              <label htmlFor="quick_cover_letter" className="block text-sm font-medium mb-2">
-                Cover Letter *
-              </label>
-              <Textarea
-                id="quick_cover_letter"
+              {/* Cover Letter */}
+              <FormField
+                control={quickApplyForm.control}
                 name="message"
-                required
-                rows={6}
-                className="bg-background/50 resize-none"
-                placeholder="Tell us why you're the perfect fit for this role. Highlight your relevant experience, skills, and what excites you about joining AfroDigital..."
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cover Letter *</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        rows={6}
+                        className="bg-background/50 resize-none"
+                        placeholder="Tell us why you're the perfect fit for this role..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Submit Button */}
-            <div className="flex gap-3 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setIsQuickApplyOpen(false)}
-                className="flex-1"
-                disabled={isQuickApplySending}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="flex-1 bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow"
-                disabled={isQuickApplySending}
-              >
-                {isQuickApplySending ? "Submitting..." : "Submit Application"}
-              </Button>
-            </div>
-          </form>
+              {/* Submit Button */}
+              <div className="flex gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsQuickApplyOpen(false)}
+                  className="flex-1"
+                  disabled={quickApplyForm.formState.isSubmitting}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-accent to-primary text-white hover:shadow-glow"
+                  disabled={quickApplyForm.formState.isSubmitting}
+                >
+                  {quickApplyForm.formState.isSubmitting ? "Submitting..." : "Submit Application"}
+                </Button>
+              </div>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
 

@@ -11,6 +11,7 @@ import CaseStudies from "./pages/CaseStudies";
 import ContactUs from "./pages/ContactUs";
 import Careers from "./pages/Careers";
 import NotFound from "./pages/NotFound";
+import Portfolio from "./pages/Portfolio";
 import ApplicationDevelopment from "./pages/services/ApplicationDevelopment";
 import WebsiteDevelopment from "./pages/services/WebsiteDevelopment";
 import SecuritySolutions from "./pages/services/SecuritySolutions";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/services/automation-cloud-devops" element={<AutomationCloudDevOps />} />
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/terms" element={<Terms />} />
